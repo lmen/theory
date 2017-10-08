@@ -39,3 +39,48 @@ There is the Component tree
 # ViewContainerRef
 
 ViewContainerRef is an object that injected
+
+# @ViewChildren
+
+Allows to access the childrens that made up the a component view according to an element criteria. The field must be of type a QueryList. After the *ngAfterViewInit* lifecycle event angular as injected a QueryList implementation. Then it is possible to subscribe to any QueryList change. 
+
+## Field declaration example
+
+`@ViewChildren(PaneDirective) panes: QueryList<PaneDirective>;`
+
+The argument specifies the criteria for the selected element to be on the QueryList. It can be a class, function or string.
+
+## How to subscrive the topic
+ngAfterViewInit() {  
+
+    this.panes.changes.subscribe((r) => { do stuf }); // it is called only after changes
+}
+
+# @Attribute 
+
+Moves (inject) the string value from a attribute defined in the XML tag from the host element into the component/sirective class. The injection is done when the class controller is instanciated, that is, as a constructor parameter.  
+
+## Attribute definition
+
+`<example-app test="outside">`
+
+## Attribute injection
+
+```typescript
+
+constructor( @Attribute('test') private attrTest: string) {
+}
+
+```
+
+# View Tree vs Content Tree 
+
+
+As the name suggests, @ContentChild and @ContentChildren queries will return directives existing inside the <ng-content></ng-content> element of your view, whereas @ViewChild and @ViewChildren only look at elements that are on your view template directly.
+
+@ContentChildren are the children, inserted by content projection (the children between <ng-content></ng-content> ) . From Minkos Blog: "On the other hand, **elements which are used between the opening and closing tags of the host element of a given component are called *content children **.
+
+Shadow DOM - is an internal DOM of your component that is defined by you (as a creator of the component) and hidden from an end-user. For example:
+
+Light DOM - is a DOM that an end-user of your component supply into your component. For example:
+
